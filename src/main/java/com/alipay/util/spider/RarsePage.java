@@ -1,10 +1,16 @@
 package com.alipay.util.spider;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
+
+import com.alipay.pojo.Red;
+import com.alipay.util.JsonUtils;
 
 /**
  * 数据采样
@@ -49,7 +55,7 @@ public class RarsePage {
 		if (elements.size() > 0 && elements.get(0) != null) {
 			Elements element = elements.get(0).select(".t_tr1");
 			StringBuffer info = new StringBuffer();
-			info.append("[");
+			List<Red> redList = new ArrayList<Red>();
 			for (int i = 0; i < element.size(); i++) {
 				// 获取期数
 				String date = element.get(i).childNode(1) + "";
@@ -62,15 +68,17 @@ public class RarsePage {
 				log.info(RegexUtils.getNumber("5:" + element.get(i).childNode(6) + ""));
 				log.info(RegexUtils.getNumber("6:" + element.get(i).childNode(7) + ""));
 				
-				info.append("{\\\"date\\\":"+RegexUtils.getDate(date)).append(",");
-				info.append("\\\"red1\\\":"+RegexUtils.getNumber(element.get(i).childNode(2)+"")).append(",");
-				info.append("\\\"red2\\\":"+RegexUtils.getNumber(element.get(i).childNode(3)+"")).append(",");
-				info.append("\\\"red3\\\":"+RegexUtils.getNumber(element.get(i).childNode(4)+"")).append(",");
-				info.append("\\\"red4\\\":"+RegexUtils.getNumber(element.get(i).childNode(5)+"")).append(",");
-				info.append("\\\"red5\\\":"+RegexUtils.getNumber(element.get(i).childNode(6)+"")).append(",");
-				info.append("\\\"red6\\\":"+RegexUtils.getNumber(element.get(i).childNode(7)+"")).append("}");
+				Red red = new Red();
+				red.setDate(RegexUtils.getDate(date));
+				red.setRed1(Integer.parseInt(RegexUtils.getNumber(element.get(i).childNode(2)+"")));
+				red.setRed2(Integer.parseInt(RegexUtils.getNumber(element.get(i).childNode(3)+"")));
+				red.setRed3(Integer.parseInt(RegexUtils.getNumber(element.get(i).childNode(4)+"")));
+				red.setRed4(Integer.parseInt(RegexUtils.getNumber(element.get(i).childNode(5)+"")));
+				red.setRed5(Integer.parseInt(RegexUtils.getNumber(element.get(i).childNode(6)+"")));
+				red.setRed6(Integer.parseInt(RegexUtils.getNumber(element.get(i).childNode(7)+"")));
+				redList.add(red);
 			}
-			info.append("]");
+			info.append(JsonUtils.objectToJson(redList));
 			info.append("parseFromString :" + info.toString());
 			log.info("--------------------------------------------------");
 			return info.toString();
