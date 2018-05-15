@@ -18,7 +18,11 @@ public class RedController {
 	@Autowired
 	private RedService redService;
 	
-	@RequestMapping(name = "addRedMethod", method = RequestMethod.GET)
+	/**
+	 * 拉取红色号码
+	 * @return
+	 */
+	@RequestMapping(value = "addRedMethod", method = RequestMethod.GET)
 	public String addRedMethod() {
 		try {
 			//解析 URL 返回数据
@@ -35,5 +39,21 @@ public class RedController {
 		}
 		return "红球添加成功！";
 	}
+	
+	/**
+	 * 求和
+	 * @return
+	 */
+	@RequestMapping(value = "calculationSumMethod", method = RequestMethod.GET)
+	public String calculationSumMethod() {
+		redService.calculationSum();
+		return "sum Ok!";
+	}
 
 }
+
+/**
+ *org.springframework.beans.factory.BeanCreationException:
+    Error creating bean with name 'requestMappingHandlerMapping' defined in class path resource [org/springframework/boot/autoconfigure/web/WebMvcAutoConfiguration$EnableWebMvcConfiguration.class]: 
+    Invocation of init method failed; nested exception is java.lang.IllegalStateException: Ambiguous mapping. Cannot map 'redController' method 
+*/
