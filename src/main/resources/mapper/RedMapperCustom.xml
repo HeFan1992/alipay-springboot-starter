@@ -3,7 +3,7 @@
 <mapper namespace="com.alipay.mapper.RedMapperCustom" >
   
 	<select id="calculationSum" statementType="CALLABLE">
-	    call red_sun()
+	    call red_sum()
 	</select>
 	
 </mapper>

@@ -23,13 +23,8 @@ public class RedServiceImpl implements RedService{
 	}
 
 	@Override
-	public boolean calculationSum() {
-		boolean flag = false;
-		int row = redMapperCustom.calculationSum();
-		if(row > 0) {
-			flag = true;
-		}
-		return flag;
+	public void calculationSum() {
+		redMapperCustom.calculationSum();
 	}
 
 }

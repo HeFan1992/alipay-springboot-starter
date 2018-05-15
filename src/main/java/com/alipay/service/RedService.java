@@ -6,6 +6,6 @@ public interface RedService {
 
 	public void saveRed(Red red) throws Exception;
 
-	public boolean calculationSum();
+	public void calculationSum();
 	
 }
